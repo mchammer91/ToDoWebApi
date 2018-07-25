@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using NSwag;
+using NSwag.CodeGeneration.CSharp;
 
 namespace ToDoApi
 {
@@ -14,6 +9,20 @@ namespace ToDoApi
     {
         public static void Main(string[] args)
         {
+            var document = SwaggerDocument.FromJsonAsync("...");
+
+            var settings = new SwaggerToCSharpClientGeneratorSettings
+            {
+                ClassName = "MyClass",
+                CSharpGeneratorSettings =
+    {
+        Namespace = "MyNamespace"
+    }
+            };
+
+            var generator = new SwaggerToCSharpClientGenerator(document, settings);
+            var code = generator.GenerateFile();
+
             CreateWebHostBuilder(args).Build().Run();
         }
 

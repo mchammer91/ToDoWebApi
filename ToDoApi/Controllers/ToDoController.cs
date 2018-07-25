@@ -24,13 +24,18 @@ namespace ToDoApi.Controllers
             }
         }
 
+
         [HttpGet]
+        [ProducesResponseType(200)]
         public ActionResult<List<ToDoItem>> GetAll()
         {
             return _context.ToDoItems.ToList();
         }
 
+
         [HttpGet("{id}", Name = "GetToDo")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public ActionResult<ToDoItem> GetById(long id)
         {
             var item = _context.ToDoItems.Find(id);
@@ -43,7 +48,9 @@ namespace ToDoApi.Controllers
             return item;
         }
 
+
         [HttpPost]
+        [ProducesResponseType(201)]
         public IActionResult Create(ToDoItem item)
         {
             _context.ToDoItems.Add(item);
@@ -53,6 +60,8 @@ namespace ToDoApi.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
         public IActionResult Update(long id, ToDoItem item)
         {
             var todo = _context.ToDoItems.Find(id);
@@ -70,6 +79,7 @@ namespace ToDoApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
         public IActionResult Delete(long id)
         {
             var todo = _context.ToDoItems.Find(id);
